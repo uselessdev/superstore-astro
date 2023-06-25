@@ -1,0 +1,64 @@
+---
+import Base from "../layouts/base.astro";
+
+export async function getStaticPaths() {
+  const result = await fetch("https://www.lojinha.dev/api/collections", {
+    headers: {
+      Authorization: import.meta.env.LOJINHA_API_KEY,
+    },
+  });
+
+  const collections = await result.json();
+
+  return collections.data.map((collection: any) => ({
+    params: { collection: collection.slug },
+    props: { name: collection.name, description: collection.description },
+  }));
+}
+
+const { collection } = Astro.params;
+const { name, description } = Astro.props;
+
+const result = await fetch(
+  `https://www.lojinha.dev/api/products?collection=${collection}`,
+  {
+    headers: {
+      Authorization: import.meta.env.LOJINHA_API_KEY,
+    },
+  }
+);
+
+const products = await result.json();
+
+const intl = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+});
+---
+
+<Base title={`Coleção: ${name}`}>
+  <main class="container mx-auto py-10 space-y-6">
+    <header>
+      <h2 class="text-lg font-semibold">{name}</h2>
+      <section class="text-sm text-gray-500">
+        <Fragment set:html={description} />
+      </section>
+    </header>
+
+    <section class="grid gap-6">
+      {
+        products.data.map((product: any) => (
+          <div>
+            <h3>{product.name}</h3>
+            {product.originalPrice > 0 ? (
+              <span>de: {intl.format(product.originalPrice / 100)}</span>
+            ) : null}
+            {product.price > 0 ? (
+              <strong>por: {intl.format(product.price / 100)}</strong>
+            ) : null}
+          </div>
+        ))
+      }
+    </section>
+  </main>
+</Base>
