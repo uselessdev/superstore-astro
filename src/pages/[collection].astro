@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/base.astro";
+import ProductCard from "../components/product.astro";
 
 export async function getStaticPaths() {
   const result = await fetch(
@@ -32,11 +33,6 @@ const result = await fetch(
 );
 
 const products = await result.json();
-
-const intl = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-});
 ---
 
 <Base title={`Coleção: ${name}`}>
@@ -48,20 +44,8 @@ const intl = new Intl.NumberFormat("pt-BR", {
       </section>
     </header>
 
-    <section class="grid gap-6">
-      {
-        products.data.map((product: any) => (
-          <div>
-            <h3>{product.name}</h3>
-            {product.originalPrice > 0 ? (
-              <span>de: {intl.format(product.originalPrice / 100)}</span>
-            ) : null}
-            {product.price > 0 ? (
-              <strong>por: {intl.format(product.price / 100)}</strong>
-            ) : null}
-          </div>
-        ))
-      }
+    <section class="grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+      {products.data.map((product: any) => <ProductCard product={product} />)}
     </section>
   </main>
 </Base>

@@ -7,5 +7,8 @@ export default defineConfig({
   integrations: [tailwind()],
   server: {
     port: 3001
+  },
+  experimental: {
+    assets: true,
   }
 });

@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/base.astro";
+import ProductCard from "../components/product.astro";
 
 const result = await fetch(`${import.meta.env.LOJINHA_API_URL}/api/products`, {
   headers: {
@@ -8,31 +9,14 @@ const result = await fetch(`${import.meta.env.LOJINHA_API_URL}/api/products`, {
 });
 
 const products = await result.json();
-
-const intl = new Intl.NumberFormat("pt-BR", {
-  style: "currency",
-  currency: "BRL",
-});
 ---
 
 <Base title="Book Store">
   <main class="container mx-auto py-10 space-y-6">
     <h2 class="text-lg font-semibold">Produtos</h2>
 
-    <section class="grid gap-6">
-      {
-        products.data.map((product: any) => (
-          <div>
-            <h3>{product.name}</h3>
-            {product.originalPrice > 0 ? (
-              <span>de: {intl.format(product.originalPrice / 100)}</span>
-            ) : null}
-            {product.price > 0 ? (
-              <strong>por: {intl.format(product.price / 100)}</strong>
-            ) : null}
-          </div>
-        ))
-      }
+    <section class="grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
+      {products.data.map((product: any) => <ProductCard product={product} />)}
     </section>
   </main>
 </Base>
