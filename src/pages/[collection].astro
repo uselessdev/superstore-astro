@@ -2,11 +2,14 @@
 import Base from "../layouts/base.astro";
 
 export async function getStaticPaths() {
-  const result = await fetch("https://www.lojinha.dev/api/collections", {
-    headers: {
-      Authorization: import.meta.env.LOJINHA_API_KEY,
-    },
-  });
+  const result = await fetch(
+    `${import.meta.env.LOJINHA_API_URL}/api/collections`,
+    {
+      headers: {
+        Authorization: import.meta.env.LOJINHA_API_KEY,
+      },
+    }
+  );
 
   const collections = await result.json();
 
@@ -20,7 +23,7 @@ const { collection } = Astro.params;
 const { name, description } = Astro.props;
 
 const result = await fetch(
-  `https://www.lojinha.dev/api/products?collection=${collection}`,
+  `${import.meta.env.LOJINHA_API_URL}/api/products?collection=${collection}`,
   {
     headers: {
       Authorization: import.meta.env.LOJINHA_API_KEY,
