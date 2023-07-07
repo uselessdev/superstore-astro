@@ -1,19 +1,10 @@
 ---
 import Base from "../layouts/base.astro";
 import ProductCard from "../components/product.astro";
+import { collections } from "../api/collections";
+import { productsFromCollection } from "../api/products";
 
 export async function getStaticPaths() {
-  const result = await fetch(
-    `${import.meta.env.LOJINHA_API_URL}/api/collections`,
-    {
-      headers: {
-        Authorization: import.meta.env.LOJINHA_API_KEY,
-      },
-    }
-  );
-
-  const collections = await result.json();
-
   return collections.data.map((collection: any) => ({
     params: { collection: collection.slug },
     props: { name: collection.name, description: collection.description },
@@ -23,19 +14,10 @@ export async function getStaticPaths() {
 const { collection } = Astro.params;
 const { name, description } = Astro.props;
 
-const result = await fetch(
-  `${import.meta.env.LOJINHA_API_URL}/api/products?collection=${collection}`,
-  {
-    headers: {
-      Authorization: import.meta.env.LOJINHA_API_KEY,
-    },
-  }
-);
-
-const products = await result.json();
+const products = await productsFromCollection({ slug: collection });
 ---
 
-<Base title={`Coleção: ${name}`}>
+<Base title={`Coleção:`}>
   <main class="container mx-auto py-10 space-y-6">
     <header>
       <h2 class="text-lg font-semibold">{name}</h2>
@@ -45,7 +27,7 @@ const products = await result.json();
     </header>
 
     <section class="grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
-      {products.data.map((product: any) => <ProductCard product={product} />)}
+      {products.data.map((product) => <ProductCard product={product} />)}
     </section>
   </main>
 </Base>

@@ -1,0 +1,40 @@
+---
+import Base from "../layouts/base.astro";
+import ProductCart from "../components/product-cart.astro";
+
+const products = [
+  {
+    image: "assets/images/245a8478-ac2e-45fc-8b47-aa96a6214ed6.jpg",
+    name: "A Guerra dos Tronos",
+    description: "Descrição do livro.",
+    price: 8600,
+    quantity: 2,
+  },
+  {
+    image: "assets/images/245a8478-ac2e-45fc-8b47-aa96a6214ed6.jpg",
+    name: "A Guerra dos Tronos",
+    description: "Descrição do livro.",
+    price: 8600,
+    quantity: 1,
+  },
+  {
+    image: "assets/images/245a8478-ac2e-45fc-8b47-aa96a6214ed6.jpg",
+    name: "A Guerra dos Tronos",
+    description: "Descrição do livro.",
+    price: 5000,
+    quantity: 3,
+  },
+];
+---
+
+<Base>
+  <main class="container px-8 mx-auto">
+    <section>
+      {products.map((product) => <ProductCart product={product} />)}
+
+      <div>
+        <h3></h3>
+      </div>
+    </section>
+  </main>
+</Base>

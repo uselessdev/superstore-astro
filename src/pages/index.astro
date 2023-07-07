@@ -1,14 +1,7 @@
 ---
 import Base from "../layouts/base.astro";
 import ProductCard from "../components/product.astro";
-
-const result = await fetch(`${import.meta.env.LOJINHA_API_URL}/api/products`, {
-  headers: {
-    Authorization: import.meta.env.LOJINHA_API_KEY,
-  },
-});
-
-const products = await result.json();
+import { products } from "../api/products";
 ---
 
 <Base title="Book Store">
@@ -16,7 +9,7 @@ const products = await result.json();
     <h2 class="text-lg font-semibold">Produtos</h2>
 
     <section class="grid gap-6 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
-      {products.data.map((product: any) => <ProductCard product={product} />)}
+      {products.data.map((product) => <ProductCard product={product} />)}
     </section>
   </main>
 </Base>

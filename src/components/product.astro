@@ -1,17 +1,10 @@
 ---
-export interface Props {
-  product: {
-    id: string;
-    name: string;
-    originalPrice: number;
-    price: number;
-  };
-}
+import type { Product } from "../api/types";
+import { intl } from "../helpers/currency";
 
-const intl = new Intl.NumberFormat("pt-BR", {
-  currency: "BRL",
-  style: "currency",
-});
+export interface Props {
+  product: Product;
+}
 
 const { product } = Astro.props;
 ---
