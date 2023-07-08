@@ -1,4 +1,5 @@
 ---
+import ButtonAddToCart from "./add-to-cart";
 import type { Product } from "../api/types";
 import { intl } from "../helpers/currency";
 
@@ -36,9 +37,5 @@ const { product } = Astro.props;
     </div>
   </div>
 
-  <button
-    class="bg-gray-700 text-white text-xs rounded-sm py-2 px-4 hover:bg-gray-600 font-semibold"
-  >
-    comprar
-  </button>
+  <ButtonAddToCart product={product} client:load />
 </div>

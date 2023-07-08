@@ -17,7 +17,7 @@ const { name, description } = Astro.props;
 const products = await productsFromCollection({ slug: collection });
 ---
 
-<Base title={`Coleção:`}>
+<Base title={`Coleção: ${name}`}>
   <main class="container mx-auto py-10 space-y-6">
     <header>
       <h2 class="text-lg font-semibold">{name}</h2>
