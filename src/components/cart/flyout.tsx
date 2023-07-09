@@ -1,25 +1,17 @@
 import { useStore } from "@nanostores/preact";
-import { cartItems, isCartOpen } from "../../cart";
-import { intl } from "../../helpers/currency";
+import { cartItems, cartPrice, isCartOpen } from "../../cart";
 import ProductCart from "./product";
 
 export default function CartFlyOut() {
   const $isCartOpen = useStore(isCartOpen)
   const $cartItems = useStore(cartItems)
+  const $cartPrice = useStore(cartPrice)
 
   if (!$isCartOpen) {
     return null
   }
 
   const products = Object.values($cartItems);
-
-  const price = products.reduce((acc, prod) => {
-    if (prod?.price) {
-      acc += prod.price * prod.quantity
-    }
-
-    return acc
-  }, 0)
 
   return (
     <aside class="w-full md:max-w-sm bg-white fixed right-0 top-0 shadow-lg h-screen animate-in slide-in-from-right-6">
@@ -43,7 +35,7 @@ export default function CartFlyOut() {
 
       <section class="py-2 px-4 flex items-end flex-col">
         <h4 class="font-mono text-xs text-gray-500">Valor Total</h4>
-        <h3 class="font-mono text-xl text-gray-700 font-semibold">{intl.format(price / 100)}</h3>
+        <h3 class="font-mono text-xl text-gray-700 font-semibold">{$cartPrice}</h3>
       </section>
 
       <footer>

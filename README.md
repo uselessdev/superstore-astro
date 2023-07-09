@@ -12,3 +12,4 @@ https://astro.build.
 - Webhook para novos produtos
 - Analitycs com vercel
 - API functions (executar no backend)
+- @vercel/kv para carrinhos
