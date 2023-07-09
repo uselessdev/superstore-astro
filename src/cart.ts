@@ -1,5 +1,5 @@
 import { atom, map } from 'nanostores'
-import type { Product } from './api/types';
+import type { Product } from './services/lojinha/types';
 
 export const isCartOpen = atom(false);
 

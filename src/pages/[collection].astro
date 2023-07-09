@@ -1,8 +1,8 @@
 ---
 import Base from "../layouts/base.astro";
 import ProductCard from "../components/product.astro";
-import { collections } from "../api/collections";
-import { productsFromCollection } from "../api/products";
+import { collections } from "../services/lojinha/collections";
+import { productsFromCollection } from "../services/lojinha/products";
 
 export async function getStaticPaths() {
   return collections.data.map((collection: any) => ({

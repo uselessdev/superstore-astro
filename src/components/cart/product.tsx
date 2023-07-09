@@ -1,5 +1,5 @@
-import { decrease, increase, remove } from "../cart";
-import { intl } from "../helpers/currency";
+import { decrease, increase, remove } from "../../cart";
+import { intl } from "../../helpers/currency";
 
 type Props = {
   product: {

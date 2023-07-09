@@ -1,7 +1,7 @@
 import { useStore } from "@nanostores/preact";
-import { cartItems, isCartOpen } from "../cart";
-import ProductCart from "./product-cart";
-import { intl } from "../helpers/currency";
+import { cartItems, isCartOpen } from "../../cart";
+import { intl } from "../../helpers/currency";
+import ProductCart from "./product";
 
 export default function CartFlyOut() {
   const $isCartOpen = useStore(isCartOpen)
@@ -22,7 +22,7 @@ export default function CartFlyOut() {
   }, 0)
 
   return (
-    <aside class="w-full max-w-sm bg-white fixed right-0 top-0 shadow-lg h-screen animate-in slide-in-from-right-6">
+    <aside class="w-full md:max-w-sm bg-white fixed right-0 top-0 shadow-lg h-screen animate-in slide-in-from-right-6">
       <header class="py-10 px-4 flex justify-between items-center">
         <h2 class="font-semibold text-2xl text-gray-700 font-mono">Carrinho</h2>
         <button onClick={() => isCartOpen.set(false)} class="fill-gray-600 hover:bg-gray-50 p-1 rounded-md">
