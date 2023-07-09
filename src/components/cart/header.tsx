@@ -1,9 +1,17 @@
 import { useStore } from '@nanostores/preact'
-import { isCartOpen, quantity } from '../../cart';
+import { useEffect } from 'preact/hooks'
+import { isCartOpen, quantity } from '../../cart'
+import { getCart } from '../../services/lojinha/cart';
 
 export default function CartButton() {
   const $isCartOpen = useStore(isCartOpen);
-  const $quantity = useStore(quantity)
+  const $quantity = useStore(quantity);
+
+  useEffect(() => {
+    (async () => {
+      await getCart();
+    })()
+  }, [])
 
   return (
     <button className="relative" onClick={() => isCartOpen.set(!$isCartOpen)}>

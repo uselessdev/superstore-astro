@@ -1,11 +1,33 @@
 import { useStore } from "@nanostores/preact";
+import { useState } from 'preact/hooks'
 import { cartItems, cartPrice, isCartOpen } from "../../cart";
 import ProductCart from "./product";
+import { createCart } from "../../services/lojinha/cart";
 
 export default function CartFlyOut() {
   const $isCartOpen = useStore(isCartOpen)
   const $cartItems = useStore(cartItems)
   const $cartPrice = useStore(cartPrice)
+
+  const [loading, setLoading] = useState(false);
+
+  const handleCreateCart = async () => {
+    setLoading(true);
+
+    const products = Object.values($cartItems).map(product => ({
+      id: product?.id as string,
+      quantity: product?.quantity as number,
+    }))
+
+    try {
+      await createCart({ products })
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+      setLoading(false)
+    }
+
+  }
 
   if (!$isCartOpen) {
     return null
@@ -39,7 +61,13 @@ export default function CartFlyOut() {
       </section>
 
       <footer>
-        <button disabled={products.length <= 0} class="w-full py-2 bg-gray-800 text-white font-mono hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed">Finalizar Compra</button>
+        <button
+          disabled={products.length <= 0}
+          onClick={handleCreateCart}
+          class={`w-full py-2 bg-gray-800 text-white font-mono hover:bg-gray-700 disabled:opacity-40 disabled:cursor-not-allowed ${loading ? 'opacity-20' : ''}`}
+        >
+          {loading ? 'Criando...' : 'Salvar Carrinho'}
+        </button>
       </footer>
     </aside>
   )

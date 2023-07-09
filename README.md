@@ -8,6 +8,8 @@ https://astro.build.
 ## TODO
 
 - Criar carrinho
+  - Salvar o id do carrinho no localStorage assim ao criar podemos pegar o valor novamente
+  - Usar vercel/kv para criar um `storage`
 - Gerenciar produtos
 - Webhook para novos produtos
 - Analitycs com vercel
